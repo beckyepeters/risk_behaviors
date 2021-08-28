@@ -2,6 +2,7 @@ from app import app
 from app import server
 import matplotlib.pyplot as plt
 import dash_html_components as html
+import dash_bootstrap_components as dbc
 import dash_core_components as dcc
 import seaborn as sns
 import pandas as pd
@@ -68,12 +69,14 @@ Helping parents and professionals have timely and relevant discussions with yout
 #         except: 
 #             pass
 
+@app.callback(
+    Output('collapse', 'is_open'), 
+    [Input('collapse-button', 'n_clicks')],
+    [State('collapse', 'is_open')],
+)
 
 # @app.callback(
 #     Output(component_id='result', component_property='children'),
 #     [Input(component_id='event_array', component_property='value')])
 
 
-if __name__ == '__main__':
-    # model = joblib.load('tuned_balanced_rf.sav')
-    app.run_server(debug=True)
