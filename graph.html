@@ -1,0 +1,108 @@
+<html>
+<head>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/vis/4.16.1/vis.css" type="text/css" />
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/vis/4.16.1/vis-network.min.js"> </script>
+<center>
+<h1></h1>
+</center>
+
+<!-- <link rel="stylesheet" href="../node_modules/vis/dist/vis.min.css" type="text/css" />
+<script type="text/javascript" src="../node_modules/vis/dist/vis.js"> </script>-->
+
+<style type="text/css">
+
+        #mynetwork {
+            width: 1000px;
+            height: 500px;
+            background-color: #ffffff;
+            border: 1px solid lightgray;
+            position: relative;
+            float: left;
+        }
+
+        
+
+        
+
+        
+</style>
+
+</head>
+
+<body>
+<div id = "mynetwork"></div>
+
+
+<script type="text/javascript">
+
+    // initialize global variables.
+    var edges;
+    var nodes;
+    var network; 
+    var container;
+    var options, data;
+
+    
+    // This method is responsible for drawing the graph, returns the drawn network
+    function drawGraph() {
+        var container = document.getElementById('mynetwork');
+        
+        
+
+        // parsing and collecting nodes and edges from the python
+        nodes = new vis.DataSet([{"id": "Never / Rarely Wear a Seatbelt", "label": "Never / Rarely Wear a Seatbelt", "shape": "dot", "size": 10}, {"id": "Drink and Drive 30d", "label": "Drink and Drive 30d", "shape": "dot", "size": 10}, {"id": "Carry a Weapon 30d", "label": "Carry a Weapon 30d", "shape": "dot", "size": 10}, {"id": "Felt Unsafe at School", "label": "Felt Unsafe at School", "shape": "dot", "size": 10}, {"id": "Felt Sad or Hopeless, 2 wks", "label": "Felt Sad or Hopeless, 2 wks", "shape": "dot", "size": 10}, {"id": "Ever Tried Cigarettes", "label": "Ever Tried Cigarettes", "shape": "dot", "size": 10}, {"id": "Drank Alcohol, 30d", "label": "Drank Alcohol, 30d", "shape": "dot", "size": 10}, {"id": "Ever used Marijuana", "label": "Ever used Marijuana", "shape": "dot", "size": 10}, {"id": "Ever Misused Prescription Meds", "label": "Ever Misused Prescription Meds", "shape": "dot", "size": 10}, {"id": "Ever Had Sex", "label": "Ever Had Sex", "shape": "dot", "size": 10}, {"id": "Watch \u003e3h TV on school days", "label": "Watch \u003e3h TV on school days", "shape": "dot", "size": 10}, {"id": "Play \u003e3h Video Games on School days", "label": "Play \u003e3h Video Games on School days", "shape": "dot", "size": 10}, {"id": "Get \u003c8h Sleep on Avg School Night", "label": "Get \u003c8h Sleep on Avg School Night", "shape": "dot", "size": 10}]);
+        edges = new vis.DataSet([{"from": "Never / Rarely Wear a Seatbelt", "to": "Drink and Drive 30d", "weight": 880}, {"from": "Never / Rarely Wear a Seatbelt", "to": "Carry a Weapon 30d", "weight": 14267}, {"from": "Never / Rarely Wear a Seatbelt", "to": "Felt Unsafe at School", "weight": 7622}, {"from": "Never / Rarely Wear a Seatbelt", "to": "Felt Sad or Hopeless, 2 wks", "weight": 14455}, {"from": "Never / Rarely Wear a Seatbelt", "to": "Ever Tried Cigarettes", "weight": 27167}, {"from": "Never / Rarely Wear a Seatbelt", "to": "Drank Alcohol, 30d", "weight": 21099}, {"from": "Never / Rarely Wear a Seatbelt", "to": "Ever used Marijuana", "weight": 22812}, {"from": "Never / Rarely Wear a Seatbelt", "to": "Ever Misused Prescription Meds", "weight": 1536}, {"from": "Never / Rarely Wear a Seatbelt", "to": "Ever Had Sex", "weight": 26465}, {"from": "Never / Rarely Wear a Seatbelt", "to": "Watch \u003e3h TV on school days", "weight": 17204}, {"from": "Never / Rarely Wear a Seatbelt", "to": "Play \u003e3h Video Games on School days", "weight": 8581}, {"from": "Never / Rarely Wear a Seatbelt", "to": "Get \u003c8h Sleep on Avg School Night", "weight": 52340}, {"from": "Drink and Drive 30d", "to": "Carry a Weapon 30d", "weight": 1679}, {"from": "Drink and Drive 30d", "to": "Felt Unsafe at School", "weight": 1113}, {"from": "Drink and Drive 30d", "to": "Felt Sad or Hopeless, 2 wks", "weight": 1611}, {"from": "Drink and Drive 30d", "to": "Ever Tried Cigarettes", "weight": 1817}, {"from": "Drink and Drive 30d", "to": "Drank Alcohol, 30d", "weight": 3592}, {"from": "Drink and Drive 30d", "to": "Ever used Marijuana", "weight": 2256}, {"from": "Drink and Drive 30d", "to": "Ever Misused Prescription Meds", "weight": 753}, {"from": "Drink and Drive 30d", "to": "Ever Had Sex", "weight": 2215}, {"from": "Drink and Drive 30d", "to": "Watch \u003e3h TV on school days", "weight": 990}, {"from": "Drink and Drive 30d", "to": "Play \u003e3h Video Games on School days", "weight": 1264}, {"from": "Drink and Drive 30d", "to": "Get \u003c8h Sleep on Avg School Night", "weight": 3651}, {"from": "Carry a Weapon 30d", "to": "Felt Unsafe at School", "weight": 11889}, {"from": "Carry a Weapon 30d", "to": "Felt Sad or Hopeless, 2 wks", "weight": 20624}, {"from": "Carry a Weapon 30d", "to": "Ever Tried Cigarettes", "weight": 34882}, {"from": "Carry a Weapon 30d", "to": "Drank Alcohol, 30d", "weight": 33620}, {"from": "Carry a Weapon 30d", "to": "Ever used Marijuana", "weight": 31586}, {"from": "Carry a Weapon 30d", "to": "Ever Misused Prescription Meds", "weight": 2367}, {"from": "Carry a Weapon 30d", "to": "Ever Had Sex", "weight": 36254}, {"from": "Carry a Weapon 30d", "to": "Watch \u003e3h TV on school days", "weight": 18441}, {"from": "Carry a Weapon 30d", "to": "Play \u003e3h Video Games on School days", "weight": 12485}, {"from": "Carry a Weapon 30d", "to": "Get \u003c8h Sleep on Avg School Night", "weight": 61957}, {"from": "Felt Unsafe at School", "to": "Felt Sad or Hopeless, 2 wks", "weight": 20436}, {"from": "Felt Unsafe at School", "to": "Ever Tried Cigarettes", "weight": 18139}, {"from": "Felt Unsafe at School", "to": "Drank Alcohol, 30d", "weight": 16690}, {"from": "Felt Unsafe at School", "to": "Ever used Marijuana", "weight": 14268}, {"from": "Felt Unsafe at School", "to": "Ever Misused Prescription Meds", "weight": 2219}, {"from": "Felt Unsafe at School", "to": "Ever Had Sex", "weight": 18112}, {"from": "Felt Unsafe at School", "to": "Watch \u003e3h TV on school days", "weight": 14018}, {"from": "Felt Unsafe at School", "to": "Play \u003e3h Video Games on School days", "weight": 10549}, {"from": "Felt Unsafe at School", "to": "Get \u003c8h Sleep on Avg School Night", "weight": 43157}, {"from": "Felt Sad or Hopeless, 2 wks", "to": "Ever Tried Cigarettes", "weight": 52595}, {"from": "Felt Sad or Hopeless, 2 wks", "to": "Drank Alcohol, 30d", "weight": 49424}, {"from": "Felt Sad or Hopeless, 2 wks", "to": "Ever used Marijuana", "weight": 42700}, {"from": "Felt Sad or Hopeless, 2 wks", "to": "Ever Misused Prescription Meds", "weight": 4922}, {"from": "Felt Sad or Hopeless, 2 wks", "to": "Ever Had Sex", "weight": 54534}, {"from": "Felt Sad or Hopeless, 2 wks", "to": "Watch \u003e3h TV on school days", "weight": 44975}, {"from": "Felt Sad or Hopeless, 2 wks", "to": "Play \u003e3h Video Games on School days", "weight": 38615}, {"from": "Felt Sad or Hopeless, 2 wks", "to": "Get \u003c8h Sleep on Avg School Night", "weight": 127828}, {"from": "Ever Tried Cigarettes", "to": "Drank Alcohol, 30d", "weight": 84246}, {"from": "Ever Tried Cigarettes", "to": "Ever used Marijuana", "weight": 84596}, {"from": "Ever Tried Cigarettes", "to": "Ever Misused Prescription Meds", "weight": 2528}, {"from": "Ever Tried Cigarettes", "to": "Ever Had Sex", "weight": 92397}, {"from": "Ever Tried Cigarettes", "to": "Watch \u003e3h TV on school days", "weight": 52233}, {"from": "Ever Tried Cigarettes", "to": "Play \u003e3h Video Games on School days", "weight": 27257}, {"from": "Ever Tried Cigarettes", "to": "Get \u003c8h Sleep on Avg School Night", "weight": 166999}, {"from": "Drank Alcohol, 30d", "to": "Ever used Marijuana", "weight": 74046}, {"from": "Drank Alcohol, 30d", "to": "Ever Misused Prescription Meds", "weight": 3887}, {"from": "Drank Alcohol, 30d", "to": "Ever Had Sex", "weight": 82887}, {"from": "Drank Alcohol, 30d", "to": "Watch \u003e3h TV on school days", "weight": 44958}, {"from": "Drank Alcohol, 30d", "to": "Play \u003e3h Video Games on School days", "weight": 30671}, {"from": "Drank Alcohol, 30d", "to": "Get \u003c8h Sleep on Avg School Night", "weight": 143370}, {"from": "Ever used Marijuana", "to": "Ever Misused Prescription Meds", "weight": 4360}, {"from": "Ever used Marijuana", "to": "Ever Had Sex", "weight": 84547}, {"from": "Ever used Marijuana", "to": "Watch \u003e3h TV on school days", "weight": 43070}, {"from": "Ever used Marijuana", "to": "Play \u003e3h Video Games on School days", "weight": 26448}, {"from": "Ever used Marijuana", "to": "Get \u003c8h Sleep on Avg School Night", "weight": 126649}, {"from": "Ever Misused Prescription Meds", "to": "Ever Had Sex", "weight": 3339}, {"from": "Ever Misused Prescription Meds", "to": "Watch \u003e3h TV on school days", "weight": 2072}, {"from": "Ever Misused Prescription Meds", "to": "Play \u003e3h Video Games on School days", "weight": 3650}, {"from": "Ever Misused Prescription Meds", "to": "Get \u003c8h Sleep on Avg School Night", "weight": 8372}, {"from": "Ever Had Sex", "to": "Watch \u003e3h TV on school days", "weight": 60276}, {"from": "Ever Had Sex", "to": "Play \u003e3h Video Games on School days", "weight": 37250}, {"from": "Ever Had Sex", "to": "Get \u003c8h Sleep on Avg School Night", "weight": 174447}, {"from": "Watch \u003e3h TV on school days", "to": "Play \u003e3h Video Games on School days", "weight": 46697}, {"from": "Watch \u003e3h TV on school days", "to": "Get \u003c8h Sleep on Avg School Night", "weight": 138858}, {"from": "Play \u003e3h Video Games on School days", "to": "Get \u003c8h Sleep on Avg School Night", "weight": 103283}]);
+
+        // adding nodes and edges to the graph
+        data = {nodes: nodes, edges: edges};
+
+        var options = {
+    "configure": {
+        "enabled": false
+    },
+    "edges": {
+        "color": {
+            "inherit": true
+        },
+        "smooth": {
+            "enabled": false,
+            "type": "continuous"
+        }
+    },
+    "interaction": {
+        "dragNodes": true,
+        "hideEdgesOnDrag": false,
+        "hideNodesOnDrag": false
+    },
+    "physics": {
+        "enabled": true,
+        "stabilization": {
+            "enabled": true,
+            "fit": true,
+            "iterations": 1000,
+            "onlyDynamicEdges": false,
+            "updateInterval": 50
+        }
+    }
+};
+        
+        
+
+        
+
+        network = new vis.Network(container, data, options);
+	 
+        
+
+
+        
+
+        return network;
+
+    }
+
+    drawGraph();
+
+</script>
+</body>
+</html>

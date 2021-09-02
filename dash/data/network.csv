@@ -1,0 +1,111 @@
+source,target,weight
+Never / Rarely Wear a Seatbelt,Drink and Drive 30d,46
+Never / Rarely Wear a Seatbelt,Carry a Weapon 30d,114
+Never / Rarely Wear a Seatbelt,Felt Unsafe at School,99
+Never / Rarely Wear a Seatbelt,"Felt Sad or Hopeless, 2 wks",307
+Never / Rarely Wear a Seatbelt,Ever Tried Cigarettes,165
+Never / Rarely Wear a Seatbelt,"Drank Alcohol, 30d",215
+Never / Rarely Wear a Seatbelt,Ever used Marijuana,353
+Never / Rarely Wear a Seatbelt,Ever Had Sex,334
+Never / Rarely Wear a Seatbelt,Watch >3h TV on school days,201
+Never / Rarely Wear a Seatbelt,Get <8h Sleep on Avg School Night,585
+Drink and Drive 30d,Never / Rarely Wear a Seatbelt,46
+Drink and Drive 30d,Carry a Weapon 30d,67
+Drink and Drive 30d,Felt Unsafe at School,47
+Drink and Drive 30d,"Felt Sad or Hopeless, 2 wks",96
+Drink and Drive 30d,Ever Tried Cigarettes,125
+Drink and Drive 30d,"Drank Alcohol, 30d",214
+Drink and Drive 30d,Ever used Marijuana,185
+Drink and Drive 30d,Ever Had Sex,177
+Drink and Drive 30d,Watch >3h TV on school days,53
+Drink and Drive 30d,Get <8h Sleep on Avg School Night,182
+Carry a Weapon 30d,Never / Rarely Wear a Seatbelt,114
+Carry a Weapon 30d,Drink and Drive 30d,67
+Carry a Weapon 30d,Felt Unsafe at School,146
+Carry a Weapon 30d,"Felt Sad or Hopeless, 2 wks",438
+Carry a Weapon 30d,Ever Tried Cigarettes,308
+Carry a Weapon 30d,"Drank Alcohol, 30d",421
+Carry a Weapon 30d,Ever used Marijuana,540
+Carry a Weapon 30d,Ever Had Sex,498
+Carry a Weapon 30d,Watch >3h TV on school days,222
+Carry a Weapon 30d,Get <8h Sleep on Avg School Night,736
+Felt Unsafe at School,Never / Rarely Wear a Seatbelt,99
+Felt Unsafe at School,Drink and Drive 30d,47
+Felt Unsafe at School,Carry a Weapon 30d,146
+Felt Unsafe at School,"Felt Sad or Hopeless, 2 wks",606
+Felt Unsafe at School,Ever Tried Cigarettes,230
+Felt Unsafe at School,"Drank Alcohol, 30d",347
+Felt Unsafe at School,Ever used Marijuana,476
+Felt Unsafe at School,Ever Had Sex,455
+Felt Unsafe at School,Watch >3h TV on school days,245
+Felt Unsafe at School,Get <8h Sleep on Avg School Night,896
+"Felt Sad or Hopeless, 2 wks",Never / Rarely Wear a Seatbelt,307
+"Felt Sad or Hopeless, 2 wks",Drink and Drive 30d,96
+"Felt Sad or Hopeless, 2 wks",Carry a Weapon 30d,438
+"Felt Sad or Hopeless, 2 wks",Felt Unsafe at School,606
+"Felt Sad or Hopeless, 2 wks",Ever Tried Cigarettes,835
+"Felt Sad or Hopeless, 2 wks","Drank Alcohol, 30d",1177
+"Felt Sad or Hopeless, 2 wks",Ever used Marijuana,1783
+"Felt Sad or Hopeless, 2 wks",Ever Had Sex,1562
+"Felt Sad or Hopeless, 2 wks",Watch >3h TV on school days,864
+"Felt Sad or Hopeless, 2 wks",Get <8h Sleep on Avg School Night,3152
+Ever Tried Cigarettes,Never / Rarely Wear a Seatbelt,165
+Ever Tried Cigarettes,Drink and Drive 30d,125
+Ever Tried Cigarettes,Carry a Weapon 30d,308
+Ever Tried Cigarettes,Felt Unsafe at School,230
+Ever Tried Cigarettes,"Felt Sad or Hopeless, 2 wks",835
+Ever Tried Cigarettes,"Drank Alcohol, 30d",825
+Ever Tried Cigarettes,Ever used Marijuana,1160
+Ever Tried Cigarettes,Ever Had Sex,929
+Ever Tried Cigarettes,Watch >3h TV on school days,370
+Ever Tried Cigarettes,Get <8h Sleep on Avg School Night,1271
+"Drank Alcohol, 30d",Never / Rarely Wear a Seatbelt,215
+"Drank Alcohol, 30d",Drink and Drive 30d,214
+"Drank Alcohol, 30d",Carry a Weapon 30d,421
+"Drank Alcohol, 30d",Felt Unsafe at School,347
+"Drank Alcohol, 30d","Felt Sad or Hopeless, 2 wks",1177
+"Drank Alcohol, 30d",Ever Tried Cigarettes,825
+"Drank Alcohol, 30d",Ever used Marijuana,1732
+"Drank Alcohol, 30d",Ever Had Sex,1370
+"Drank Alcohol, 30d",Watch >3h TV on school days,514
+"Drank Alcohol, 30d",Get <8h Sleep on Avg School Night,1981
+Ever used Marijuana,Never / Rarely Wear a Seatbelt,353
+Ever used Marijuana,Drink and Drive 30d,185
+Ever used Marijuana,Carry a Weapon 30d,540
+Ever used Marijuana,Felt Unsafe at School,476
+Ever used Marijuana,"Felt Sad or Hopeless, 2 wks",1783
+Ever used Marijuana,Ever Tried Cigarettes,1160
+Ever used Marijuana,"Drank Alcohol, 30d",1732
+Ever used Marijuana,Ever Had Sex,2203
+Ever used Marijuana,Watch >3h TV on school days,841
+Ever used Marijuana,Get <8h Sleep on Avg School Night,3000
+Ever Had Sex,Never / Rarely Wear a Seatbelt,334
+Ever Had Sex,Drink and Drive 30d,177
+Ever Had Sex,Carry a Weapon 30d,498
+Ever Had Sex,Felt Unsafe at School,455
+Ever Had Sex,"Felt Sad or Hopeless, 2 wks",1562
+Ever Had Sex,Ever Tried Cigarettes,929
+Ever Had Sex,"Drank Alcohol, 30d",1370
+Ever Had Sex,Ever used Marijuana,2203
+Ever Had Sex,Watch >3h TV on school days,797
+Ever Had Sex,Get <8h Sleep on Avg School Night,2751
+Watch >3h TV on school days,Never / Rarely Wear a Seatbelt,201
+Watch >3h TV on school days,Drink and Drive 30d,53
+Watch >3h TV on school days,Carry a Weapon 30d,222
+Watch >3h TV on school days,Felt Unsafe at School,245
+Watch >3h TV on school days,"Felt Sad or Hopeless, 2 wks",864
+Watch >3h TV on school days,Ever Tried Cigarettes,370
+Watch >3h TV on school days,"Drank Alcohol, 30d",514
+Watch >3h TV on school days,Ever used Marijuana,841
+Watch >3h TV on school days,Ever Had Sex,797
+Watch >3h TV on school days,Get <8h Sleep on Avg School Night,1656
+Get <8h Sleep on Avg School Night,Never / Rarely Wear a Seatbelt,585
+Get <8h Sleep on Avg School Night,Drink and Drive 30d,182
+Get <8h Sleep on Avg School Night,Carry a Weapon 30d,736
+Get <8h Sleep on Avg School Night,Felt Unsafe at School,896
+Get <8h Sleep on Avg School Night,"Felt Sad or Hopeless, 2 wks",3152
+Get <8h Sleep on Avg School Night,Ever Tried Cigarettes,1271
+Get <8h Sleep on Avg School Night,"Drank Alcohol, 30d",1981
+Get <8h Sleep on Avg School Night,Ever used Marijuana,3000
+Get <8h Sleep on Avg School Night,Ever Had Sex,2751
+Get <8h Sleep on Avg School Night,Watch >3h TV on school days,1656

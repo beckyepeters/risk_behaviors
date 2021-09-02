@@ -1,0 +1,108 @@
+<html>
+<head>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/vis/4.16.1/vis.css" type="text/css" />
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/vis/4.16.1/vis-network.min.js"> </script>
+<center>
+<h1></h1>
+</center>
+
+<!-- <link rel="stylesheet" href="../node_modules/vis/dist/vis.min.css" type="text/css" />
+<script type="text/javascript" src="../node_modules/vis/dist/vis.js"> </script>-->
+
+<style type="text/css">
+
+        #mynetwork {
+            width: 500px;
+            height: 500px;
+            background-color: #ffffff;
+            border: 1px solid lightgray;
+            position: relative;
+            float: left;
+        }
+
+        
+
+        
+
+        
+</style>
+
+</head>
+
+<body>
+<div id = "mynetwork"></div>
+
+
+<script type="text/javascript">
+
+    // initialize global variables.
+    var edges;
+    var nodes;
+    var network; 
+    var container;
+    var options, data;
+
+    
+    // This method is responsible for drawing the graph, returns the drawn network
+    function drawGraph() {
+        var container = document.getElementById('mynetwork');
+        
+        
+
+        // parsing and collecting nodes and edges from the python
+        nodes = new vis.DataSet([{"id": "Never / Rarely Wear a Seatbelt", "label": "Never / Rarely Wear a Seatbelt", "shape": "dot", "size": 10}, {"id": "Drink and Drive 30d", "label": "Drink and Drive 30d", "shape": "dot", "size": 10}, {"id": "Carry a Weapon 30d", "label": "Carry a Weapon 30d", "shape": "dot", "size": 10}, {"id": "Felt Unsafe at School", "label": "Felt Unsafe at School", "shape": "dot", "size": 10}, {"id": "Felt Sad or Hopeless, 2 wks", "label": "Felt Sad or Hopeless, 2 wks", "shape": "dot", "size": 10}, {"id": "Ever Tried Cigarettes", "label": "Ever Tried Cigarettes", "shape": "dot", "size": 10}, {"id": "Drank Alcohol, 30d", "label": "Drank Alcohol, 30d", "shape": "dot", "size": 10}, {"id": "Ever used Marijuana", "label": "Ever used Marijuana", "shape": "dot", "size": 10}, {"id": "Ever Had Sex", "label": "Ever Had Sex", "shape": "dot", "size": 10}, {"id": "Watch \u003e3h TV on school days", "label": "Watch \u003e3h TV on school days", "shape": "dot", "size": 10}, {"id": "Get \u003c8h Sleep on Avg School Night", "label": "Get \u003c8h Sleep on Avg School Night", "shape": "dot", "size": 10}]);
+        edges = new vis.DataSet([{"from": "Never / Rarely Wear a Seatbelt", "to": "Drink and Drive 30d", "weight": 46}, {"from": "Never / Rarely Wear a Seatbelt", "to": "Carry a Weapon 30d", "weight": 114}, {"from": "Never / Rarely Wear a Seatbelt", "to": "Felt Unsafe at School", "weight": 99}, {"from": "Never / Rarely Wear a Seatbelt", "to": "Felt Sad or Hopeless, 2 wks", "weight": 307}, {"from": "Never / Rarely Wear a Seatbelt", "to": "Ever Tried Cigarettes", "weight": 165}, {"from": "Never / Rarely Wear a Seatbelt", "to": "Drank Alcohol, 30d", "weight": 215}, {"from": "Never / Rarely Wear a Seatbelt", "to": "Ever used Marijuana", "weight": 353}, {"from": "Never / Rarely Wear a Seatbelt", "to": "Ever Had Sex", "weight": 334}, {"from": "Never / Rarely Wear a Seatbelt", "to": "Watch \u003e3h TV on school days", "weight": 201}, {"from": "Never / Rarely Wear a Seatbelt", "to": "Get \u003c8h Sleep on Avg School Night", "weight": 585}, {"from": "Drink and Drive 30d", "to": "Carry a Weapon 30d", "weight": 67}, {"from": "Drink and Drive 30d", "to": "Felt Unsafe at School", "weight": 47}, {"from": "Drink and Drive 30d", "to": "Felt Sad or Hopeless, 2 wks", "weight": 96}, {"from": "Drink and Drive 30d", "to": "Ever Tried Cigarettes", "weight": 125}, {"from": "Drink and Drive 30d", "to": "Drank Alcohol, 30d", "weight": 214}, {"from": "Drink and Drive 30d", "to": "Ever used Marijuana", "weight": 185}, {"from": "Drink and Drive 30d", "to": "Ever Had Sex", "weight": 177}, {"from": "Drink and Drive 30d", "to": "Watch \u003e3h TV on school days", "weight": 53}, {"from": "Drink and Drive 30d", "to": "Get \u003c8h Sleep on Avg School Night", "weight": 182}, {"from": "Carry a Weapon 30d", "to": "Felt Unsafe at School", "weight": 146}, {"from": "Carry a Weapon 30d", "to": "Felt Sad or Hopeless, 2 wks", "weight": 438}, {"from": "Carry a Weapon 30d", "to": "Ever Tried Cigarettes", "weight": 308}, {"from": "Carry a Weapon 30d", "to": "Drank Alcohol, 30d", "weight": 421}, {"from": "Carry a Weapon 30d", "to": "Ever used Marijuana", "weight": 540}, {"from": "Carry a Weapon 30d", "to": "Ever Had Sex", "weight": 498}, {"from": "Carry a Weapon 30d", "to": "Watch \u003e3h TV on school days", "weight": 222}, {"from": "Carry a Weapon 30d", "to": "Get \u003c8h Sleep on Avg School Night", "weight": 736}, {"from": "Felt Unsafe at School", "to": "Felt Sad or Hopeless, 2 wks", "weight": 606}, {"from": "Felt Unsafe at School", "to": "Ever Tried Cigarettes", "weight": 230}, {"from": "Felt Unsafe at School", "to": "Drank Alcohol, 30d", "weight": 347}, {"from": "Felt Unsafe at School", "to": "Ever used Marijuana", "weight": 476}, {"from": "Felt Unsafe at School", "to": "Ever Had Sex", "weight": 455}, {"from": "Felt Unsafe at School", "to": "Watch \u003e3h TV on school days", "weight": 245}, {"from": "Felt Unsafe at School", "to": "Get \u003c8h Sleep on Avg School Night", "weight": 896}, {"from": "Felt Sad or Hopeless, 2 wks", "to": "Ever Tried Cigarettes", "weight": 835}, {"from": "Felt Sad or Hopeless, 2 wks", "to": "Drank Alcohol, 30d", "weight": 1177}, {"from": "Felt Sad or Hopeless, 2 wks", "to": "Ever used Marijuana", "weight": 1783}, {"from": "Felt Sad or Hopeless, 2 wks", "to": "Ever Had Sex", "weight": 1562}, {"from": "Felt Sad or Hopeless, 2 wks", "to": "Watch \u003e3h TV on school days", "weight": 864}, {"from": "Felt Sad or Hopeless, 2 wks", "to": "Get \u003c8h Sleep on Avg School Night", "weight": 3152}, {"from": "Ever Tried Cigarettes", "to": "Drank Alcohol, 30d", "weight": 825}, {"from": "Ever Tried Cigarettes", "to": "Ever used Marijuana", "weight": 1160}, {"from": "Ever Tried Cigarettes", "to": "Ever Had Sex", "weight": 929}, {"from": "Ever Tried Cigarettes", "to": "Watch \u003e3h TV on school days", "weight": 370}, {"from": "Ever Tried Cigarettes", "to": "Get \u003c8h Sleep on Avg School Night", "weight": 1271}, {"from": "Drank Alcohol, 30d", "to": "Ever used Marijuana", "weight": 1732}, {"from": "Drank Alcohol, 30d", "to": "Ever Had Sex", "weight": 1370}, {"from": "Drank Alcohol, 30d", "to": "Watch \u003e3h TV on school days", "weight": 514}, {"from": "Drank Alcohol, 30d", "to": "Get \u003c8h Sleep on Avg School Night", "weight": 1981}, {"from": "Ever used Marijuana", "to": "Ever Had Sex", "weight": 2203}, {"from": "Ever used Marijuana", "to": "Watch \u003e3h TV on school days", "weight": 841}, {"from": "Ever used Marijuana", "to": "Get \u003c8h Sleep on Avg School Night", "weight": 3000}, {"from": "Ever Had Sex", "to": "Watch \u003e3h TV on school days", "weight": 797}, {"from": "Ever Had Sex", "to": "Get \u003c8h Sleep on Avg School Night", "weight": 2751}, {"from": "Watch \u003e3h TV on school days", "to": "Get \u003c8h Sleep on Avg School Night", "weight": 1656}]);
+
+        // adding nodes and edges to the graph
+        data = {nodes: nodes, edges: edges};
+
+        var options = {
+    "configure": {
+        "enabled": false
+    },
+    "edges": {
+        "color": {
+            "inherit": true
+        },
+        "smooth": {
+            "enabled": false,
+            "type": "continuous"
+        }
+    },
+    "interaction": {
+        "dragNodes": true,
+        "hideEdgesOnDrag": false,
+        "hideNodesOnDrag": false
+    },
+    "physics": {
+        "enabled": true,
+        "stabilization": {
+            "enabled": true,
+            "fit": true,
+            "iterations": 1000,
+            "onlyDynamicEdges": false,
+            "updateInterval": 50
+        }
+    }
+};
+        
+        
+
+        
+
+        network = new vis.Network(container, data, options);
+	 
+        
+
+
+        
+
+        return network;
+
+    }
+
+    drawGraph();
+
+</script>
+</body>
+</html>
