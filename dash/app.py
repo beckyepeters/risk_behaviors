@@ -10,10 +10,26 @@ import pandas as pd
 from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score
 import joblib
 
-cyto.load_extra_layouts()
-
 df = pd.read_csv('data/sex.csv')
 external_stylesheets = ['https://codepen.io/chriddyp/pen/bWLwgP.css']
+age = ['12 yrs -', '13 yrs', '14 yrs', '15 yrs', '16 yrs', '17 yrs', '18 yrs +']
+age_dict = {'12 yrs -': 1, '13 yrs': 2, '14 yrs': 3, 
+           '15 yrs': 4, '16 yrs': 5, '17 yrs': 6, '18 yrs +': 7}
+sex = ['Female', 'Male']
+sex_dict = {'Female': 1, 'Male': 2}
+race7 = ['Hisp/Latinx', 'Black or Af Am', 
+               'White', 'Asian', 'Multiple Races', 
+               'NatHaw/OtherPacIsl', 'AmInd/AlaskaNat']
+race7_dict = {'AmInd/AlaskaNat': 1, 'Asian': 2, 'Black or Af Am': 3, 
+             'Hisp/Latinx': 4, 'NatHaw/OtherPacIsl': 5, 'White': 6, 'Multiple Races (Non-Hisp)': 7}
+bmi = ['Below 18.5', '18.5-24.9', '25.0-29.9', '30.0 and Above']
+bmi_dict = {'Below 18.5': 18.5, '18.5-24.9': 20, '25.0-29.9': 27.5, '30.0 and Above': 30}
+grade = ['9th Grade', '10th Grade', '11th Grade', '12th Grade']
+grade_dict = {'9th Grade': 1, '10th Grade': 2, '11th Grade': 3, 
+             '12th Grade': 4}
+sexid2 = ['Heterosexual', 'Sexual Minority', 'Unsure']
+sexid2_dict = {'Heterosexual': 1, 'Sexual Minority': 2, 'Unsure': 3}
+model = joblib.load('rf_hyp.sav')
 
 app = dash.Dash(__name__, external_stylesheets=[dbc.themes.BOOTSTRAP])
 app.title = 'Modeling the Youth Risk Behavior Survey, 2009-2019'
@@ -131,17 +147,97 @@ Important Considerations
     )
 
         ]),
-        dcc.Tab(label='Predict for 3 Targets', children=[
-            dcc.Graph(
-        figure=fig
-    )
+        dcc.Tab(label='Make Predictions', children=[
+            dcc.Markdown('''
+            Use the dropdown controls to predict youth risk behavior based on age, gender
+            assigned at birth, race/ethnicity, age, and grade.'''),
+            html.Div(id='prediction-content', style={'fontWeight': 'bold'}),
+            html.Div([ 
+                dcc.Markdown('##### Age'), 
+                dcc.Dropdown(
+                    id='age', 
+                    options=[{'label': age, 'value': age} for age in age], 
+                    value=age[0], 
+                    style=dict(width='33%')
+                ),
+            ], style={'padding': '1.5em'}),
+            html.Div([ 
+                dcc.Markdown('##### Gender Assigned at Birth'), 
+                dcc.Dropdown(
+                    id='sex', 
+                    options=[{'label': sex, 'value': sex} for sex in sex], 
+                    value=sex[0],
+                    style=dict(width='33%')
+                ),
+            ], style={'padding': '1.5em'}),
+            
+            html.Div([ 
+                dcc.Markdown('##### Race / Ethnicity'), 
+                dcc.Dropdown(
+                    id='race7', 
+                    options=[{'label': race7, 'value': race7} for race7 in race7], 
+                    value=race7[0],
+                    style=dict(width='33%')
+                ),
+            ], style={'padding': '1.5em'}),
 
-        ]),
+            html.Div([ 
+                dcc.Markdown('##### BMI'), 
+                dcc.Dropdown(
+                    id='bmi', 
+                    options=[{'label': bmi, 'value': bmi} for bmi in bmi], 
+                    value=bmi[0],
+                    style=dict(width='33%')
+                ),
+            ], style={'padding': '1.5em'}),
+
+            html.Div([ 
+                dcc.Markdown('##### Grade'), 
+                dcc.Dropdown(
+                    id='grade', 
+                    options=[{'label': grade, 'value': grade} for grade in grade], 
+                    value=grade[0],
+                    style=dict(width='33%')
+                ),
+            ], style={'padding': '1.5em'}),
+
+            html.Div([ 
+                dcc.Markdown('##### Sexual Identity'), 
+                dcc.Dropdown(
+                    id='sexid2', 
+                    options=[{'label': sexid2, 'value': sexid2} for sexid2 in sexid2], 
+                    value=sexid2[0],
+                    style=dict(width='33%')
+                ),
+            ], style={'padding': '1.5em'}),
+
+            html.Div([
+                dcc.Textarea(
+                    id='prediction-results-area', 
+                    value=f'Your predictions are: '
+                ), 
+                html.Div(id='predict')
+            ]), 
+            
+], style={'width': '30%', 'display': 'inline-block', 'display': 'flex'},
+),
+
         dcc.Tab(label='Visualize the Connections', children=[
+            dcc.Markdown('''The graph network shown below is based on a 
+            subsample of 10,000 surveys from the original dataset, maintaining the proportions of target 
+            classifications. Each node is a negative risk behavior and the directional edges 
+            between the nodes represent the proportion of survey respondents who answered 
+            affirmatively to any of those questions. For example, 31.5 percent of respondents who
+            reported feeling sad or hopeless for more than 2 weeks in a row also reported getting
+            less than 8 hours of sleep on an average school night. This graph may provide some 
+            further direction to dashboard users about potentially relevant discussions with youth.
+            '''), 
             cyto.Cytoscape(
         id='cytoscape',
         layout={'name': 'circle', 'directed':True},
         style={'width': '80%', 'height': '800px'},
+        boxSelectionEnabled=True,
+        responsive=True, 
         elements=[
             {'data': {'id': 'Never / Rarely Wear a Seatbelt',
                 'value': 'Never / Rarely Wear a Seatbelt',
@@ -386,7 +482,8 @@ stylesheet=[
         ])
         ]
     ),
-])])
+])
+            ])
 
 @app.callback(
     Output("collapse", "is_open"),
@@ -415,8 +512,32 @@ def toggle_collapse(n, is_open):
         return not is_open
     return is_open
 
+@app.callback(
+    dash.dependencies.Output('predict', 'children'), 
+    [dash.dependencies.Input('age', 'value'), 
+    Input('sex', 'value'), 
+    Input('race7', 'value'), 
+    Input('bmi', 'value'),
+    Input('grade', 'value'),
+    Input('sexid2', 'value')])
+def predict(age, sex, race7, bmi, grade, sexid2): 
+    if age and sex and race7 and bmi and grade and sexid2 is not None: 
+        year = 2019
+        age = age_dict.get(age)
+        sex = sex_dict.get(sex)
+        race7 = race7_dict.get(race7)
+        bmi = bmi_dict.get(bmi)
+        grade = grade_dict.get(grade)
+        sexid2 = sexid2_dict.get(sexid2)
+        sample = [[year, age, sex, grade, race7, bmi, sexid2, 1, 1, 1, 2, 2, 1, 1, 3, 8, 8, 1, 3, 2, 2, 3]]
+        try: 
+            y_pred = model.predict(sample)
+            y_pred_proba = model.predict_proba(sample)
+            return f'Classification results are: {y_pred}. Probabilities for each classification are: {y_pred_proba[0]}, {y_pred_proba[1]}, and {y_pred_proba[2]}.'
+        except: 
+            return 'Unable to predict'
+
 app.config.suppress_callback_exceptions = True
 
 if __name__ == '__main__':
-    # model = joblib.load('tuned_balanced_rf.sav')
     app.run_server(debug=True)
