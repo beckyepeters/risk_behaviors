@@ -7,8 +7,9 @@ import dash_cytoscape as cyto
 import plotly.express as px
 import plotly.graph_objects as go
 import pandas as pd
-from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score
 import joblib
+import dash_pivottable
+
 
 df = pd.read_csv('data/sex.csv')
 external_stylesheets = ['https://codepen.io/chriddyp/pen/bWLwgP.css']
@@ -29,7 +30,16 @@ grade_dict = {'9th Grade': 1, '10th Grade': 2, '11th Grade': 3,
              '12th Grade': 4}
 sexid2 = ['Heterosexual', 'Sexual Minority', 'Unsure']
 sexid2_dict = {'Heterosexual': 1, 'Sexual Minority': 2, 'Unsure': 3}
-model = joblib.load('rf_hyp.sav')
+sleep = ['4 h or less', '5 hrs', '6 hrs', '7 hrs', '8 hrs', '9 hrs', '10 h or more']
+sleep_dict = {'4 h or less': 1, '5 hrs': 2, '6 hrs': 3, '7 hrs': 4, '8 hrs': 5, '9 hrs': 6, '10 h or more': 7}
+breakfast = ['0 days', '1 day', '2 days', '3 days', '4 days', '5 days', '6 days', '7 days']
+breakfast_dict = {'0 days': 1, '1 day': 2, '2 days': 3, '3 days': 4, '4 days': 5, '5 days': 6, '6 days': 7, '7 days': 8}
+sports = ['0 teams', '1 team', '2 teams', '3 or more teams']
+sports_dict = {'0 teams': 1, '1 team': 2, '2 teams': 3, '3 or more teams': 4}
+tv = ['None', 'Less than 1 hour', '1 h', '2 h', '3 h', '4 h', '5 h or more']
+tv_dict = {'None': 1, 'Less than 1 hour': 2, '1 h': 3, '2 h': 4, '3 h': 5, '4 h': 6, '5 h or more': 7}
+
+model = joblib.load('rf_hyp.joblib')
 
 app = dash.Dash(__name__, external_stylesheets=[dbc.themes.BOOTSTRAP])
 app.title = 'Modeling the Youth Risk Behavior Survey, 2009-2019'
@@ -144,32 +154,35 @@ Important Considerations
         dcc.Tab(label='Explore the Data', children=[
             dcc.Graph(
         figure=fig
+    ), 
+    dash_pivvottable.PivotTable(
+        data=df
     )
 
         ]),
         dcc.Tab(label='Make Predictions', children=[
             dcc.Markdown('''
-            Use the dropdown controls to predict youth risk behavior based on age, gender
-            assigned at birth, race/ethnicity, age, and grade.'''),
-            html.Div(id='prediction-content', style={'fontWeight': 'bold'}),
+            Change the dropdown menus to predict youth risk behavior based on age, gender
+            assigned at birth, race/ethnicity, age, grade, and other responses from the survey.'''),
+            html.Div(className = 'row', id='prediction-content', style={'fontWeight': 'bold'}),
             html.Div([ 
                 dcc.Markdown('##### Age'), 
                 dcc.Dropdown(
                     id='age', 
                     options=[{'label': age, 'value': age} for age in age], 
                     value=age[0], 
-                    style=dict(width='33%')
+                    style=dict(width='200px')
                 ),
-            ], style={'padding': '1.5em'}),
+            ], style={'display': 'inline-block'}),
             html.Div([ 
                 dcc.Markdown('##### Gender Assigned at Birth'), 
                 dcc.Dropdown(
                     id='sex', 
                     options=[{'label': sex, 'value': sex} for sex in sex], 
                     value=sex[0],
-                    style=dict(width='33%')
+                    style=dict(width='200px')
                 ),
-            ], style={'padding': '1.5em'}),
+            ], style={'display': 'inline-block'}),
             
             html.Div([ 
                 dcc.Markdown('##### Race / Ethnicity'), 
@@ -177,9 +190,11 @@ Important Considerations
                     id='race7', 
                     options=[{'label': race7, 'value': race7} for race7 in race7], 
                     value=race7[0],
-                    style=dict(width='33%')
+                    style=dict(width='200px')
                 ),
-            ], style={'padding': '1.5em'}),
+            ], style={'display': 'inline-block'}),
+
+            html.Div(className = 'row', id='prediction-content-2', style={'fontWeight': 'bold'}),
 
             html.Div([ 
                 dcc.Markdown('##### BMI'), 
@@ -187,9 +202,9 @@ Important Considerations
                     id='bmi', 
                     options=[{'label': bmi, 'value': bmi} for bmi in bmi], 
                     value=bmi[0],
-                    style=dict(width='33%')
+                    style=dict(width='200px')
                 ),
-            ], style={'padding': '1.5em'}),
+            ], style={'display': 'inline-block'}),
 
             html.Div([ 
                 dcc.Markdown('##### Grade'), 
@@ -197,9 +212,9 @@ Important Considerations
                     id='grade', 
                     options=[{'label': grade, 'value': grade} for grade in grade], 
                     value=grade[0],
-                    style=dict(width='33%')
+                    style=dict(width='200px')
                 ),
-            ], style={'padding': '1.5em'}),
+            ], style={'display': 'inline-block'}),
 
             html.Div([ 
                 dcc.Markdown('##### Sexual Identity'), 
@@ -207,20 +222,52 @@ Important Considerations
                     id='sexid2', 
                     options=[{'label': sexid2, 'value': sexid2} for sexid2 in sexid2], 
                     value=sexid2[0],
-                    style=dict(width='33%')
+                    style=dict(width='200px')
                 ),
-            ], style={'padding': '1.5em'}),
+            ], style={'display': 'inline-block'}),
 
-            html.Div([
-                dcc.Textarea(
-                    id='prediction-results-area', 
-                    value=f'Your predictions are: '
-                ), 
+            html.Div([ 
+                dcc.Markdown('##### How many hours of sleep does this individual get per night?'), 
+                dcc.Dropdown(
+                    id='sleep', 
+                    options=[{'label': sleep, 'value': sleep} for sleep in sleep], 
+                    value=sleep[3],
+                    style=dict(width='200px')
+                ),
+            ], style={'display': 'inline-block'}),
+
+            html.Div([ 
+                dcc.Markdown('##### How many times did the individual eat breakfast last week?'), 
+                dcc.Dropdown(
+                    id='breakfast', 
+                    options=[{'label': breakfast, 'value': breakfast} for breakfast in breakfast], 
+                    value=breakfast[3],
+                    style=dict(width='200px')
+                ),
+            ], style={'display': 'inline-block'}),
+
+            html.Div([ 
+                dcc.Markdown('##### Was this individual on any sports teams in the past 12 months?'), 
+                dcc.Dropdown(
+                    id='sports', 
+                    options=[{'label': sports, 'value': sports} for sports in sports], 
+                    value=sports[3],
+                    style=dict(width='200px')
+                ),
+            ], style={'display': 'inline-block'}),
+
+            html.Div([ 
+                dcc.Markdown('##### How many hours of TV does this individual watch on a school day?'), 
+                dcc.Dropdown(
+                    id='tv', 
+                    options=[{'label': tv, 'value': tv} for tv in tv], 
+                    value=tv[3],
+                    style=dict(width='200px')
+                ),
+            ], style={'display': 'inline-block'}),
+
                 html.Div(id='predict')
-            ]), 
-            
-], style={'width': '30%', 'display': 'inline-block', 'display': 'flex'},
-),
+            ], style={'width': '100%', 'display': 'flex', 'display': 'inline-block'},), 
 
         dcc.Tab(label='Visualize the Connections', children=[
             dcc.Markdown('''The graph network shown below is based on a 
@@ -519,9 +566,13 @@ def toggle_collapse(n, is_open):
     Input('race7', 'value'), 
     Input('bmi', 'value'),
     Input('grade', 'value'),
-    Input('sexid2', 'value')])
-def predict(age, sex, race7, bmi, grade, sexid2): 
-    if age and sex and race7 and bmi and grade and sexid2 is not None: 
+    Input('sexid2', 'value'), 
+    Input('sleep', 'value'), 
+    Input('breakfast', 'value'), 
+    Input('sports', 'value'), 
+    Input('tv', 'value')])
+def predict(age, sex, race7, bmi, grade, sexid2, sleep, breakfast, sports, tv): 
+    if age and sex and race7 and bmi and grade and sexid2 and sleep and breakfast and sports and tv is not None: 
         year = 2019
         age = age_dict.get(age)
         sex = sex_dict.get(sex)
@@ -529,11 +580,18 @@ def predict(age, sex, race7, bmi, grade, sexid2):
         bmi = bmi_dict.get(bmi)
         grade = grade_dict.get(grade)
         sexid2 = sexid2_dict.get(sexid2)
-        sample = [[year, age, sex, grade, race7, bmi, sexid2, 1, 1, 1, 2, 2, 1, 1, 3, 8, 8, 1, 3, 2, 2, 3]]
+        sleep = sleep_dict.get(sleep)
+        breakfast = breakfast_dict.get(breakfast)
+        sports = sports_dict.get(sports)
+        tv = tv_dict.get(tv)
+        sample = [[year, age, sex, grade, race7, bmi, sexid2, 2, 1, 1, 2, 2, 1, 1, 3, breakfast, 8, tv, 3, sports, 2, sleep]]
         try: 
             y_pred = model.predict(sample)
             y_pred_proba = model.predict_proba(sample)
-            return f'Classification results are: {y_pred}. Probabilities for each classification are: {y_pred_proba[0]}, {y_pred_proba[1]}, and {y_pred_proba[2]}.'
+            p1 = round(y_pred_proba[0][0][1] * 100, 2)
+            p2 = round(y_pred_proba[1][0][1] * 100, 2)
+            p3 = round(y_pred_proba[2][0][1] * 100, 2)
+            return f'Classification results are: {y_pred}. The probability that this individual has had sex is {p1} percent, that the individual has been sad / hopeless is {p2} percent, and that the individual has tried smoking cigarettes {p3} percent.'
         except: 
             return 'Unable to predict'
 
