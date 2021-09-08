@@ -22,13 +22,58 @@ Purpose of the Project / Model:
 * To improve upon the baseline accuracy of 'x% of people your age or gender or race engaged in this activity' as available now through the comprehensive [YRBSS online dashboard](https://yrbs-explorer.services.cdc.gov/#/)
 * To better understand the world in which my kids are growing up. 
 
-Ethical and Moral Considerations: 
+Other Considerations: 
 1. Insights over Answers: 
     * Certainly a high probability of a person engaging in an activity does not mean that person has.
 2. Discussions over Discipline:  
     * The hope is that adult knowledge of the prevalence of these risk behaviors will lead to more appropriate, relevant conversations with young pepole about their own health. 
 3. Reality over Determinism: 
     * Even if the model were 100% accurate, actual choices are impossible to predict for individual people.  
+
+### Exploring the Data
+* Data were cleaned as follows: 
+    * Retained 10 years of survey data (2009-2019)
+    * Removed ancillary survey questions that were not asked every year the survey was administered
+    * Removed NaN responses for the 3 target survey questions (Q58, Q25, Q30)
+    * Filled NaN responses with k-Nearest Neighbors Imputation
+
+The number of surveys taken per year remained relatively uniform over the ten years of data considered for this project. 
+
+Figure 1: Number of Surveys Completed per Year, by Gender Assigned at Birth
+![Number of Surveys Per Year](images/num_per_year.png)
+
+The age distribution ranged from 12 years old to 18 years old, with the majority of respondents as 15 and 16 year olds. 
+Figure 2: Age Distribution
+![Age Distribution](images/age_overall.png)
+
+The respondents were primarily Hispanic / Latinx, Black / African American, and White. 
+Figure 3: Race / Ethnicity Distribution
+![Race Overall](images/race_overall.png)
+
+The three targets for classification represented relatively imbalanced classes, which needed to be addressed in each of the different algorithms chosen for experimentation. 
+Figure 4: Three Targets Distribution
+![Three Targets](images/eachtargetpct.png)
+
+### Modeling, Predictions, and Conclusions
+* Of the many algorithms with which I experimented for the best metrics results, the Random Forest performed the best in the least amount of time, with the following metrics and confusion matrix results: 
+
+Figure 5: Classification Metrics for Algorithm Evaluation 
+![metrics](images/four_metrics.png)
+
+Figure 6: Confusion Matrix for highest-performing Random Forest Algorithm 
+![confusion matrix](images/confusion_matrix.png) 
+
+Using Grid Search CV and a consistent number for the random_state parameter, I found the best performing algorithm to be a Random Forest with the following parameters: 
+* class_weight = 'balanced'
+* criterion = 'entropy'
+* max_depth = 25
+* max_features = 5
+* n_estimators = 250
+
+Overall the project provided insight into some commonly linked risk behaviors, the features important to prediction (listed in the dashboard dropdowns), and the difficulties of predicting individual behaviors from accumulated survey data.  
+
+Figure 7: Cytoscape of Connected Behaviors, taken on a representative subsample of 10,000 survey responses
+![cytoscape](images/cytoscape.png) 
 
 ### Data Sources and Primary Resources for Project
 * Data Resources: 
@@ -37,8 +82,6 @@ Ethical and Moral Considerations:
     * [User's Guide for the 2019 YRBS National, State, and District Combined Datasets](https://www.cdc.gov/healthyyouth/data/yrbs/pdf/2019/2019_YRBS_SADC_Documentation.pdf)
 * Coding Resources: 
     * [MDB Tools on GitHub](https://github.com/mdbtools/mdbtools)
-
-
 
 ### Other Citations and References 
 * [Let's Talk About Sex, Maybe](https://www.coloradohealthinstitute.org/research/lets-talk-about-sex-maybe); Colorado Health Institute, accessed Aug 2021

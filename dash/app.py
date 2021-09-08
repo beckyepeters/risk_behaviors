@@ -10,7 +10,6 @@ import pandas as pd
 import joblib
 import dash_pivottable
 
-
 df = pd.read_csv('data/sex.csv')
 external_stylesheets = ['https://codepen.io/chriddyp/pen/bWLwgP.css']
 age = ['12 yrs -', '13 yrs', '14 yrs', '15 yrs', '16 yrs', '17 yrs', '18 yrs +']
@@ -155,9 +154,13 @@ Important Considerations
             dcc.Graph(
         figure=fig
     ), 
-    dash_pivvottable.PivotTable(
-        data=df
-    )
+    # dash_pivottable.PivotTable(
+    #   id='pivot,'
+    #   data=[df.columns.tolist()] + df.values.tolist(), 
+    #   cols=["sex"],
+    #   rows=["race7"],
+    #   vals=["sitename"],
+    # )
 
         ]),
         dcc.Tab(label='Make Predictions', children=[
@@ -166,105 +169,106 @@ Important Considerations
             assigned at birth, race/ethnicity, age, grade, and other responses from the survey.'''),
             html.Div(className = 'row', id='prediction-content', style={'fontWeight': 'bold'}),
             html.Div([ 
-                dcc.Markdown('##### Age'), 
+                dcc.Markdown('How old is this individual?'),
                 dcc.Dropdown(
                     id='age', 
-                    options=[{'label': age, 'value': age} for age in age], 
+                    options=[{'label': age, 'value': age, 'title': 'Age'} for age in age], 
                     value=age[0], 
-                    style=dict(width='200px')
+                    style=dict(width='100%')
                 ),
-            ], style={'display': 'inline-block'}),
+            ]),
+
             html.Div([ 
-                dcc.Markdown('##### Gender Assigned at Birth'), 
+                dcc.Markdown('Gender assigned at Birth?'),
                 dcc.Dropdown(
                     id='sex', 
-                    options=[{'label': sex, 'value': sex} for sex in sex], 
+                    options=[{'label': sex, 'value': sex, 'title': 'Gender Assigned at Birth'} for sex in sex], 
                     value=sex[0],
-                    style=dict(width='200px')
+                    style=dict(width='100%')
                 ),
-            ], style={'display': 'inline-block'}),
+            ]),
             
             html.Div([ 
-                dcc.Markdown('##### Race / Ethnicity'), 
+                dcc.Markdown('Race / Ethnicity?'),
                 dcc.Dropdown(
                     id='race7', 
-                    options=[{'label': race7, 'value': race7} for race7 in race7], 
+                    options=[{'label': race7, 'value': race7, 'title': 'Race/Ethnicity'} for race7 in race7], 
                     value=race7[0],
-                    style=dict(width='200px')
+                    style=dict(width='100%')
                 ),
-            ], style={'display': 'inline-block'}),
+            ]),
 
             html.Div(className = 'row', id='prediction-content-2', style={'fontWeight': 'bold'}),
 
             html.Div([ 
-                dcc.Markdown('##### BMI'), 
+                dcc.Markdown('What is this person\'s BMI?'),
                 dcc.Dropdown(
                     id='bmi', 
-                    options=[{'label': bmi, 'value': bmi} for bmi in bmi], 
+                    options=[{'label': bmi, 'value': bmi, 'title':'BMI'} for bmi in bmi], 
                     value=bmi[0],
-                    style=dict(width='200px')
+                    style=dict(width='100%')
                 ),
-            ], style={'display': 'inline-block'}),
+            ]),
 
             html.Div([ 
-                dcc.Markdown('##### Grade'), 
+                dcc.Markdown('Grade in School?'),
                 dcc.Dropdown(
                     id='grade', 
-                    options=[{'label': grade, 'value': grade} for grade in grade], 
+                    options=[{'label': grade, 'value': grade, 'title': 'Grade'} for grade in grade], 
                     value=grade[0],
-                    style=dict(width='200px')
+                    style=dict(width='100%')
                 ),
-            ], style={'display': 'inline-block'}),
+            ]),
 
             html.Div([ 
-                dcc.Markdown('##### Sexual Identity'), 
+                dcc.Markdown('Sexual Identity?'),
                 dcc.Dropdown(
                     id='sexid2', 
-                    options=[{'label': sexid2, 'value': sexid2} for sexid2 in sexid2], 
+                    options=[{'label': sexid2, 'value': sexid2, 'title': 'Sexual Identity'} for sexid2 in sexid2], 
                     value=sexid2[0],
-                    style=dict(width='200px')
+                    style=dict(width='100%')
                 ),
-            ], style={'display': 'inline-block'}),
+            ]),
 
             html.Div([ 
-                dcc.Markdown('##### How many hours of sleep does this individual get per night?'), 
+                dcc.Markdown('Hours of Sleep per Night?'),
                 dcc.Dropdown(
                     id='sleep', 
-                    options=[{'label': sleep, 'value': sleep} for sleep in sleep], 
+                    options=[{'label': sleep, 'value': sleep, 'title': 'Hours of sleep per night?'} for sleep in sleep], 
                     value=sleep[3],
-                    style=dict(width='200px')
+                    style=dict(width='100%')
                 ),
-            ], style={'display': 'inline-block'}),
+            ]),
 
             html.Div([ 
-                dcc.Markdown('##### How many times did the individual eat breakfast last week?'), 
+                dcc.Markdown('Days at breakfast last week?'),
                 dcc.Dropdown(
                     id='breakfast', 
-                    options=[{'label': breakfast, 'value': breakfast} for breakfast in breakfast], 
+                    options=[{'label': breakfast, 'value': breakfast, 'title': 'Days ate breakfast last week?'} for breakfast in breakfast], 
                     value=breakfast[3],
-                    style=dict(width='200px')
+                    style=dict(width='100%')
                 ),
-            ], style={'display': 'inline-block'}),
+            ]),
 
             html.Div([ 
-                dcc.Markdown('##### Was this individual on any sports teams in the past 12 months?'), 
+                dcc.Markdown('Number of sports teams last year?'),
                 dcc.Dropdown(
                     id='sports', 
-                    options=[{'label': sports, 'value': sports} for sports in sports], 
+                    options=[{'label': sports, 'value': sports, 'title': 'Number of sports teams last year?'} for sports in sports], 
                     value=sports[3],
-                    style=dict(width='200px')
+                    style=dict(width='100%')
                 ),
-            ], style={'display': 'inline-block'}),
+            ]),
 
             html.Div([ 
-                dcc.Markdown('##### How many hours of TV does this individual watch on a school day?'), 
+                dcc.Markdown('Hours of TV on a school day?'),
                 dcc.Dropdown(
                     id='tv', 
-                    options=[{'label': tv, 'value': tv} for tv in tv], 
+                    options=[{'label': tv, 'value': tv, 'title': 'Hours of TV on a school day?'} for tv in tv], 
                     value=tv[3],
-                    style=dict(width='200px')
+                    style=dict(width='100%')
                 ),
-            ], style={'display': 'inline-block'}),
+            ]),
 
                 html.Div(id='predict')
             ], style={'width': '100%', 'display': 'flex', 'display': 'inline-block'},), 
@@ -277,7 +281,8 @@ Important Considerations
             affirmatively to any of those questions. For example, 31.5 percent of respondents who
             reported feeling sad or hopeless for more than 2 weeks in a row also reported getting
             less than 8 hours of sleep on an average school night. This graph may provide some 
-            further direction to dashboard users about potentially relevant discussions with youth.
+            further direction to dashboard users about potentially relevant discussions with youth. Numbers 
+            listed are percentages. 
             '''), 
             cyto.Cytoscape(
         id='cytoscape',
@@ -323,169 +328,169 @@ Important Considerations
    {'data': {'id': 'Get <8h Sleep on Avg School Night',
      'value': 'Get <8h Sleep on Avg School Night',
      'label': 'Get <8h Sleep on Avg School Night'}},
-  {'data': {'weight': '0.5%',
+  {'data': {'weight': '0.5',
      'source': 'Never / Rarely Wear a Seatbelt',
      'target': 'Drink and Drive 30d'}},
-   {'data': {'weight': '1.0%',
+   {'data': {'weight': '1.0',
      'source': 'Never / Rarely Wear a Seatbelt',
      'target': 'Carry a Weapon 30d'}},
-   {'data': {'weight': '1.0%',
+   {'data': {'weight': '1.0',
      'source': 'Never / Rarely Wear a Seatbelt',
      'target': 'Felt Unsafe at School'}},
-   {'data': {'weight': '3.0%',
+   {'data': {'weight': '3.0',
      'source': 'Never / Rarely Wear a Seatbelt',
      'target': 'Felt Sad or Hopeless, 2 wks'}},
-   {'data': {'weight': '1.5%',
+   {'data': {'weight': '1.5',
      'source': 'Never / Rarely Wear a Seatbelt',
      'target': 'Ever Tried Cigarettes'}},
-   {'data': {'weight': '2.1%',
+   {'data': {'weight': '2.1',
      'source': 'Never / Rarely Wear a Seatbelt',
      'target': 'Drank Alcohol, 30d'}},
-   {'data': {'weight': '3.5%',
+   {'data': {'weight': '3.5',
      'source': 'Never / Rarely Wear a Seatbelt',
      'target': 'Ever used Marijuana'}},
-   {'data': {'weight': '3.3%',
+   {'data': {'weight': '3.3',
      'source': 'Never / Rarely Wear a Seatbelt',
      'target': 'Ever Had Sex'}},
-   {'data': {'weight': '2.0%',
+   {'data': {'weight': '0.2',
      'source': 'Never / Rarely Wear a Seatbelt',
      'target': 'Watch >3h TV on school days'}},
-   {'data': {'weight': '5.8%',
+   {'data': {'weight': '5.8',
      'source': 'Never / Rarely Wear a Seatbelt',
      'target': 'Get <8h Sleep on Avg School Night'}},
-   {'data': {'weight': '0.6%',
+   {'data': {'weight': '0.6',
      'source': 'Drink and Drive 30d',
      'target': 'Carry a Weapon 30d'}},
-   {'data': {'weight': '0.5%',
+   {'data': {'weight': '0.5',
      'source': 'Drink and Drive 30d',
      'target': 'Felt Unsafe at School'}},
-   {'data': {'weight': '1.0%',
+   {'data': {'weight': '1.0',
      'source': 'Drink and Drive 30d',
      'target': 'Felt Sad or Hopeless, 2 wks'}},
-   {'data': {'weight': '1.3%',
+   {'data': {'weight': '1.3',
      'source': 'Drink and Drive 30d',
      'target': 'Ever Tried Cigarettes'}},
-   {'data': {'weight': '2.1%',
+   {'data': {'weight': '2.1',
      'source': 'Drink and Drive 30d',
      'target': 'Drank Alcohol, 30d'}},
-   {'data': {'weight': '1.9%',
+   {'data': {'weight': '1.9',
      'source': 'Drink and Drive 30d',
      'target': 'Ever used Marijuana'}},
-   {'data': {'weight': '1.7%',
+   {'data': {'weight': '1.7',
      'source': 'Drink and Drive 30d',
      'target': 'Ever Had Sex'}},
-   {'data': {'weight': '0.5%',
+   {'data': {'weight': '0.5',
      'source': 'Drink and Drive 30d',
      'target': 'Watch >3h TV on school days'}},
-   {'data': {'weight': '1.8%',
+   {'data': {'weight': '1.8',
      'source': 'Drink and Drive 30d',
      'target': 'Get <8h Sleep on Avg School Night'}},
-   {'data': {'weight': '1.5%',
+   {'data': {'weight': '1.5',
      'source': 'Carry a Weapon 30d',
      'target': 'Felt Unsafe at School'}},
-   {'data': {'weight': '4.4%',
+   {'data': {'weight': '4.4',
      'source': 'Carry a Weapon 30d',
      'target': 'Felt Sad or Hopeless, 2 wks'}},
-   {'data': {'weight': '3.0%',
+   {'data': {'weight': '3.0',
      'source': 'Carry a Weapon 30d',
      'target': 'Ever Tried Cigarettes'}},
-   {'data': {'weight': '4.2%',
+   {'data': {'weight': '4.2',
      'source': 'Carry a Weapon 30d',
      'target': 'Drank Alcohol, 30d'}},
-   {'data': {'weight': '5.4%',
+   {'data': {'weight': '5.4',
      'source': 'Carry a Weapon 30d',
      'target': 'Ever used Marijuana'}},
-   {'data': {'weight': '5.0%',
+   {'data': {'weight': '5.0',
      'source': 'Carry a Weapon 30d',
      'target': 'Ever Had Sex'}},
-   {'data': {'weight': '2.2%',
+   {'data': {'weight': '2.2',
      'source': 'Carry a Weapon 30d',
      'target': 'Watch >3h TV on school days'}},
-   {'data': {'weight': '7.4%',
+   {'data': {'weight': '7.4',
      'source': 'Carry a Weapon 30d',
      'target': 'Get <8h Sleep on Avg School Night'}},
-   {'data': {'weight': '6.0%',
+   {'data': {'weight': '6.0',
      'source': 'Felt Unsafe at School',
      'target': 'Felt Sad or Hopeless, 2 wks'}},
-   {'data': {'weight': '2.3%',
+   {'data': {'weight': '2.3',
      'source': 'Felt Unsafe at School',
      'target': 'Ever Tried Cigarettes'}},
-   {'data': {'weight': '3.4%',
+   {'data': {'weight': '3.4',
      'source': 'Felt Unsafe at School',
      'target': 'Drank Alcohol, 30d'}},
-   {'data': {'weight': '4.8%',
+   {'data': {'weight': '4.8',
      'source': 'Felt Unsafe at School',
      'target': 'Ever used Marijuana'}},
-   {'data': {'weight': '4.5%',
+   {'data': {'weight': '4.5',
      'source': 'Felt Unsafe at School',
      'target': 'Ever Had Sex'}},
-   {'data': {'weight': '2.5%',
+   {'data': {'weight': '2.5',
      'source': 'Felt Unsafe at School',
      'target': 'Watch >3h TV on school days'}},
-   {'data': {'weight': '8.9%',
+   {'data': {'weight': '8.9',
      'source': 'Felt Unsafe at School',
      'target': 'Get <8h Sleep on Avg School Night'}},
-   {'data': {'weight': '8.3%',
+   {'data': {'weight': '8.3',
      'source': 'Felt Sad or Hopeless, 2 wks',
      'target': 'Ever Tried Cigarettes'}},
-   {'data': {'weight': '11.8%',
+   {'data': {'weight': '11.8',
      'source': 'Felt Sad or Hopeless, 2 wks',
      'target': 'Drank Alcohol, 30d'}},
-   {'data': {'weight': '17.9%',
+   {'data': {'weight': '17.9',
      'source': 'Felt Sad or Hopeless, 2 wks',
      'target': 'Ever used Marijuana'}},
-   {'data': {'weight': '15.6%',
+   {'data': {'weight': '15.6',
      'source': 'Felt Sad or Hopeless, 2 wks',
      'target': 'Ever Had Sex'}},
-   {'data': {'weight': '8.6%',
+   {'data': {'weight': '8.6',
      'source': 'Felt Sad or Hopeless, 2 wks',
      'target': 'Watch >3h TV on school days'}},
-   {'data': {'weight': '31.5%',
+   {'data': {'weight': '31.5',
      'source': 'Felt Sad or Hopeless, 2 wks',
      'target': 'Get <8h Sleep on Avg School Night'}},
-   {'data': {'weight': '8.3%',
+   {'data': {'weight': '8.3',
      'source': 'Ever Tried Cigarettes',
      'target': 'Drank Alcohol, 30d'}},
-   {'data': {'weight': '11.6%',
+   {'data': {'weight': '11.6',
      'source': 'Ever Tried Cigarettes',
      'target': 'Ever used Marijuana'}},
-   {'data': {'weight': '9.3%',
+   {'data': {'weight': '9.3',
      'source': 'Ever Tried Cigarettes',
      'target': 'Ever Had Sex'}},
-   {'data': {'weight': '3.7%',
+   {'data': {'weight': '3.7',
      'source': 'Ever Tried Cigarettes',
      'target': 'Watch >3h TV on school days'}},
-   {'data': {'weight': '12.7%',
+   {'data': {'weight': '12.7',
      'source': 'Ever Tried Cigarettes',
      'target': 'Get <8h Sleep on Avg School Night'}},
-   {'data': {'weight': '17.3%',
+   {'data': {'weight': '17.3',
      'source': 'Drank Alcohol, 30d',
      'target': 'Ever used Marijuana'}},
-   {'data': {'weight': '13.7%',
+   {'data': {'weight': '13.7',
      'source': 'Drank Alcohol, 30d',
      'target': 'Ever Had Sex'}},
-   {'data': {'weight': '5.1%',
+   {'data': {'weight': '5.1',
      'source': 'Drank Alcohol, 30d',
      'target': 'Watch >3h TV on school days'}},
-   {'data': {'weight': '19.9%',
+   {'data': {'weight': '19.9',
      'source': 'Drank Alcohol, 30d',
      'target': 'Get <8h Sleep on Avg School Night'}},
-   {'data': {'weight': '22.0%',
+   {'data': {'weight': '22.0',
      'source': 'Ever used Marijuana',
      'target': 'Ever Had Sex'}},
-   {'data': {'weight': '8.4%',
+   {'data': {'weight': '8.4',
      'source': 'Ever used Marijuana',
      'target': 'Watch >3h TV on school days'}},
-   {'data': {'weight': '30.0%',
+   {'data': {'weight': '30.0',
      'source': 'Ever used Marijuana',
      'target': 'Get <8h Sleep on Avg School Night'}},
-   {'data': {'weight': '7.8%',
+   {'data': {'weight': '7.8',
      'source': 'Ever Had Sex',
      'target': 'Watch >3h TV on school days'}},
-   {'data': {'weight': '27.5%',
+   {'data': {'weight': '27.5',
      'source': 'Ever Had Sex',
      'target': 'Get <8h Sleep on Avg School Night'}},
-   {'data': {'weight': '16.6%',
+   {'data': {'weight': '16.6',
      'source': 'Watch >3h TV on school days',
      'target': 'Get <8h Sleep on Avg School Night'}}
 ], 
@@ -493,38 +498,45 @@ stylesheet=[
             {
             'selector': 'node',
             'style': {
-                'content': 'data(label)'
+                'label': 'data(label)', 
+                'label-scale': 3,
+                'background-color': '#0D664CC1'
             }
         },
             {
                 'selector': '.interest', 
                 'style': {
                     'background-color': '#664CC1', 
-                    'line-color': 'black'
+                    'shape': 'circle'
                 }
             }, 
             {
             'selector': 'edge',
             'style': {
-                'label': 'data(weight)', 
                 'curve-style': 'bezier', 
-                'target-arrow-shape': 'triangle'
+                'source-arrow-color': '#8858D4',
+                'target-arrow-shape': 'triangle', 
+                'line-color': '#0D072B8B', 
+                'arrow-scale': 1
+
             }},  
             {
-            'selector': '#BA',
+            'selector': '[weight >= 10]',
             'style': {
-                'source-arrow-color': '#8858D4', 
-                'source-arrow-shape': 'triangle', 
-                'line-color': '#8858D4', 
-                'arrow-scale': 4
+                'line-color': '#E6072B8B', 
+                'label': 'data(weight)',
+                'arrow-scale': 1,
+                'width': 5, 
+                'target-arrow-shape': 'triangle',
+                'target-arrow-color': '#E6072B8B'
             }},
             {
-            'selector': '#DA',
+            'selector': '[weight < 10]',
             'style': {
-                'target-arrow-color': '#8858D4', 
-                'target-arrow-shape': 'triangle', 
-                'line-color': '#4B43B2', 
-                'arrow-scale': 4
+                'line-color': '#0D072B8B', 
+                'arrow-scale': .5,
+                'width': .5, 
+                'target-arrow-shape': 'triangle'
             }}
         ])
         ]
