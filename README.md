@@ -5,7 +5,7 @@ linkedin.com/beckyepeters<br>
 becky.e.peters@gmail.com<br>
 
 ### Background and Motivation 
-*Please see the pdf of the presentation (['RiskBehaviors.pdf'](https://github.com/beckyepeters/risk_behaviors/blob/main/RiskBehaviorsPresentation.pdf) in this repository) for more information about the tech stack, future work, and screenshots of the dashboard (local development).* 
+*Please see the pdf of the presentation (['RiskBehaviors.pdf'](https://github.com/beckyepeters/risk_behaviors/blob/main/RiskBehaviors.pdf) in this repository) for more information about the tech stack, future work, and screenshots of the dashboard (local development).* 
 
 I will use the analogy of jellyfish in the ocean to describe risky behaviors in one's youth. Part of my job as a mom (or a doctor's job with their pediatric patients, or a teacher's / counselor's job with their students) is to partner with youth to help them make choices as they develop throughout their lives. Youth deserve accurate information about the consequences of their behaviors, as well as about the possibility of these choices arising in their lives. Of course, there are so many things to navigate as you develop into adulthood; we can't throw all the jellyfish at them at once and expect them to make good decisions. We have to help them navigate the water by talking about risk and helping them make informed and appropriate decisions about their lives and discuss with them how it may impact their future. 
 
