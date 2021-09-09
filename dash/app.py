@@ -29,15 +29,36 @@ grade_dict = {'9th Grade': 1, '10th Grade': 2, '11th Grade': 3,
              '12th Grade': 4}
 sexid2 = ['Heterosexual', 'Sexual Minority', 'Unsure']
 sexid2_dict = {'Heterosexual': 1, 'Sexual Minority': 2, 'Unsure': 3}
-sleep = ['4 h or less', '5 hrs', '6 hrs', '7 hrs', '8 hrs', '9 hrs', '10 h or more']
-sleep_dict = {'4 h or less': 1, '5 hrs': 2, '6 hrs': 3, '7 hrs': 4, '8 hrs': 5, '9 hrs': 6, '10 h or more': 7}
-breakfast = ['0 days', '1 day', '2 days', '3 days', '4 days', '5 days', '6 days', '7 days']
-breakfast_dict = {'0 days': 1, '1 day': 2, '2 days': 3, '3 days': 4, '4 days': 5, '5 days': 6, '6 days': 7, '7 days': 8}
-sports = ['0 teams', '1 team', '2 teams', '3 or more teams']
-sports_dict = {'0 teams': 1, '1 team': 2, '2 teams': 3, '3 or more teams': 4}
-tv = ['None', 'Less than 1 hour', '1 h', '2 h', '3 h', '4 h', '5 h or more']
-tv_dict = {'None': 1, 'Less than 1 hour': 2, '1 h': 3, '2 h': 4, '3 h': 5, '4 h': 6, '5 h or more': 7}
-
+grades89_dict = {'Mostly A\'s': 1, 'Mostly B\'s': 2, 'Mostly C\'s': 3, 'Mostly D\'s': 4, 'Mostly F\'s': 5, 
+             'None of these': 6, 'Not sure': 7}
+grades89 = ['Mostly A\'s', 'Mostly B\'s', 'Mostly C\'s', 'Mostly D\'s', 'Mostly F\'s', 
+             'None of these', 'Not sure']
+sleep88_dict = {'4 hours or less': 1, '5 hours': 2, '6 hours': 3, '7 hours': 4, '8 hours': 5, 
+             '9 hours': 6, '10 or more hours': 7}
+sleep88 = ['4 hours or less', '5 hours', '6 hours', '7 hours', '8 hours', 
+             '9 hours', '10 or more hours']
+asthma87_dict = {'Yes': 1, 'No': 2, 'Not sure': 3}
+asthma87 = ['Yes', 'No', 'Not sure']
+concussion83_dict = {'0': 1, '1': 2, '2': 3, '3': 4, '4 or more': 5}
+concussion83 = ['0', '1', '2', '3', '4 or more']
+teams82_dict = {'0 teams': 1, '1 team': 2, '2 teams': 3, '3 or more teams': 4}
+teams82 = ['0 teams', '1 team', '2 teams', '3 or more teams']
+videogames80_dict = {'No video games': 1, 'Less than 1 hour': 2, '1 hour': 3, '2 hours': 4, 
+                  '3 hours': 5, '4 hours': 6, '5 or more hours': 7}
+videogames80 = ['No video games', 'Less than 1 hour', '1 hour', '2 hours', 
+                  '3 hours', '4 hours', '5 or more hours']
+weight67_dict = {'Very underweight': 1, 'Slightly underweight': 2, 'About the right weight': 3, 
+             'Slightly overweight': 4, 'Very overweight': 5}
+weight67 = ['Very underweight', 'Slightly underweight', 'About the right weight', 
+             'Slightly overweight', 'Very overweight']
+breakfast77_dict = {'0 days': 1, '1 day': 2, '2 days': 3, '3 days': 4, '4 days': 5, '5 days': 6, 
+                 '6 days': 7, '7 days': 8}
+breakfast77 = ['0 days', '1 day', '2 days', '3 days', '4 days', '5 days', 
+                 '6 days', '7 days']
+tv79_dict = {'No TV': 1, 'Less than 1 hour': 2, '1 hour': 3, '2 hours': 4, '3 hours': 5, 
+          '4 hours': 6, '5 or more hours': 7}
+tv79 = ['No TV', 'Less than 1 hour', '1 hour', '2 hours', '3 hours', 
+          '4 hours', '5 or more hours']
 model = joblib.load('rf_hyp.joblib')
 
 app = dash.Dash(__name__, external_stylesheets=[dbc.themes.BOOTSTRAP])
@@ -189,6 +210,16 @@ Important Considerations
             ]),
             
             html.Div([ 
+                dcc.Markdown('Grade in School?'),
+                dcc.Dropdown(
+                    id='grade', 
+                    options=[{'label': grade, 'value': grade, 'title': 'Grade'} for grade in grade], 
+                    value=grade[0],
+                    style=dict(width='100%')
+                ),
+            ]),
+
+            html.Div([ 
                 dcc.Markdown('Race / Ethnicity?'),
                 dcc.Dropdown(
                     id='race7', 
@@ -211,16 +242,6 @@ Important Considerations
             ]),
 
             html.Div([ 
-                dcc.Markdown('Grade in School?'),
-                dcc.Dropdown(
-                    id='grade', 
-                    options=[{'label': grade, 'value': grade, 'title': 'Grade'} for grade in grade], 
-                    value=grade[0],
-                    style=dict(width='100%')
-                ),
-            ]),
-
-            html.Div([ 
                 dcc.Markdown('Sexual Identity?'),
                 dcc.Dropdown(
                     id='sexid2', 
@@ -231,31 +252,21 @@ Important Considerations
             ]),
 
             html.Div([ 
-                dcc.Markdown('Hours of Sleep per Night?'),
+                dcc.Markdown('How would this person describe their weight?'),
                 dcc.Dropdown(
-                    id='sleep', 
-                    options=[{'label': sleep, 'value': sleep, 'title': 'Hours of sleep per night?'} for sleep in sleep], 
-                    value=sleep[3],
+                    id='weight67', 
+                    options=[{'label': weight67, 'value': weight67, 'title': 'Weight67'} for weight67 in weight67], 
+                    value=weight67[2],
                     style=dict(width='100%')
                 ),
             ]),
 
             html.Div([ 
-                dcc.Markdown('Days at breakfast last week?'),
+                dcc.Markdown('How many days did this individual eat breakfast last week?'),
                 dcc.Dropdown(
-                    id='breakfast', 
-                    options=[{'label': breakfast, 'value': breakfast, 'title': 'Days ate breakfast last week?'} for breakfast in breakfast], 
-                    value=breakfast[3],
-                    style=dict(width='100%')
-                ),
-            ]),
-
-            html.Div([ 
-                dcc.Markdown('Number of sports teams last year?'),
-                dcc.Dropdown(
-                    id='sports', 
-                    options=[{'label': sports, 'value': sports, 'title': 'Number of sports teams last year?'} for sports in sports], 
-                    value=sports[3],
+                    id='breakfast77', 
+                    options=[{'label': breakfast77, 'value': breakfast77, 'title': 'Days ate breakfast last week?'} for breakfast77 in breakfast77], 
+                    value=breakfast77[3],
                     style=dict(width='100%')
                 ),
             ]),
@@ -263,9 +274,69 @@ Important Considerations
             html.Div([ 
                 dcc.Markdown('Hours of TV on a school day?'),
                 dcc.Dropdown(
-                    id='tv', 
-                    options=[{'label': tv, 'value': tv, 'title': 'Hours of TV on a school day?'} for tv in tv], 
-                    value=tv[3],
+                    id='tv79', 
+                    options=[{'label': tv79, 'value': tv79, 'title': 'Hours of TV on a school day?'} for tv79 in tv79], 
+                    value=tv79[3],
+                    style=dict(width='100%')
+                ),
+            ]),
+
+            html.Div([ 
+                dcc.Markdown('Hours of Video Games on a school day?'),
+                dcc.Dropdown(
+                    id='videogames80', 
+                    options=[{'label': videogames80, 'value': videogames80, 'title': 'Hours of video games on a school day?'} for videogames80 in videogames80], 
+                    value=videogames80[3],
+                    style=dict(width='100%')
+                ),
+            ]),
+
+            html.Div([ 
+                dcc.Markdown('Number of sports teams last year?'),
+                dcc.Dropdown(
+                    id='teams82', 
+                    options=[{'label': teams82, 'value': teams82, 'title': 'Number of sports teams last year?'} for teams82 in teams82], 
+                    value=teams82[3],
+                    style=dict(width='100%')
+                ),
+            ]),
+
+            html.Div([ 
+                dcc.Markdown('Number of concussions last year?'),
+                dcc.Dropdown(
+                    id='concussion83', 
+                    options=[{'label': concussion83, 'value': concussion83, 'title': 'Number of concussions last year?'} for concussion83 in concussion83], 
+                    value=concussion83[3],
+                    style=dict(width='100%')
+                ),
+            ]),
+
+            html.Div([ 
+                dcc.Markdown('Has this individual ever been told they have asthma?'),
+                dcc.Dropdown(
+                    id='asthma87', 
+                    options=[{'label': asthma87, 'value': asthma87, 'title': 'asthma?'} for asthma87 in asthma87], 
+                    value=asthma87[1],
+                    style=dict(width='100%')
+                ),
+            ]),
+
+            html.Div([ 
+                dcc.Markdown('Hours of Sleep per Night?'),
+                dcc.Dropdown(
+                    id='sleep88', 
+                    options=[{'label': sleep88, 'value': sleep88, 'title': 'Hours of sleep per night?'} for sleep88 in sleep88], 
+                    value=sleep88[3],
+                    style=dict(width='100%')
+                ),
+            ]),
+
+            html.Div([ 
+                dcc.Markdown('How are this individual\'s current grades?'),
+                dcc.Dropdown(
+                    id='grades89', 
+                    options=[{'label': grades89, 'value': grades89, 'title': 'grades?'} for grades89 in grades89], 
+                    value=grades89[0],
                     style=dict(width='100%')
                 ),
             ]),
@@ -575,28 +646,37 @@ def toggle_collapse(n, is_open):
     dash.dependencies.Output('predict', 'children'), 
     [dash.dependencies.Input('age', 'value'), 
     Input('sex', 'value'), 
+    Input('grade', 'value'),
     Input('race7', 'value'), 
     Input('bmi', 'value'),
-    Input('grade', 'value'),
     Input('sexid2', 'value'), 
-    Input('sleep', 'value'), 
-    Input('breakfast', 'value'), 
-    Input('sports', 'value'), 
-    Input('tv', 'value')])
-def predict(age, sex, race7, bmi, grade, sexid2, sleep, breakfast, sports, tv): 
-    if age and sex and race7 and bmi and grade and sexid2 and sleep and breakfast and sports and tv is not None: 
-        year = 2019
+    Input('weight67', 'value'), 
+    Input('breakfast77', 'value'), 
+    Input('tv79', 'value'), 
+    Input('videogames80', 'value'), 
+    Input('teams82', 'value'), 
+    Input('concussion83', 'value'), 
+    Input('asthma87', 'value'),
+    Input('sleep88', 'value'),
+    Input('grades89', 'value')])
+def predict(age, sex, grade, race7, bmi, sexid2, weight67, breakfast77, tv79, videogames80, teams82, concussion83, asthma87, sleep88, grades89): 
+    if age and sex and grade and race7 and bmi and sexid2 and weight67 and breakfast77 and tv79 and videogames80 and teams82 and concussion83 and asthma87 and sleep88 and grades89 is not None: 
         age = age_dict.get(age)
         sex = sex_dict.get(sex)
+        grade = grade_dict.get(grade)
         race7 = race7_dict.get(race7)
         bmi = bmi_dict.get(bmi)
-        grade = grade_dict.get(grade)
         sexid2 = sexid2_dict.get(sexid2)
-        sleep = sleep_dict.get(sleep)
-        breakfast = breakfast_dict.get(breakfast)
-        sports = sports_dict.get(sports)
-        tv = tv_dict.get(tv)
-        sample = [[year, age, sex, grade, race7, bmi, sexid2, 2, 1, 1, 2, 2, 1, 1, 3, breakfast, 8, tv, 3, sports, 2, sleep]]
+        weight67 = weight67_dict.get(weight67)
+        breakfast77 = breakfast77_dict.get(breakfast77)
+        tv79 = tv79_dict.get(tv79)
+        videogames80 = videogames80_dict.get(videogames80)
+        teams82 = teams82_dict.get(teams82)
+        concussion83 = concussion83_dict.get(concussion83)
+        asthma87 = asthma87_dict.get(asthma87)
+        sleep88 = sleep88_dict.get(sleep88)
+        grades89 = grades89_dict.get(grades89)
+        sample = [[21, 2019, age, sex, grade, race7, bmi, sexid2, weight67, breakfast77, tv79, videogames80, teams82, concussion83, asthma87, sleep88, grades89]]
         try: 
             y_pred = model.predict(sample)
             y_pred_proba = model.predict_proba(sample)
