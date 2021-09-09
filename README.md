@@ -64,16 +64,20 @@ Figure 6: Confusion Matrix for highest-performing Random Forest Algorithm
 ![confusion matrix](images/confusion_matrix.png) 
 
 Using Grid Search CV and a consistent number for the random_state parameter, I found the best performing algorithm to be a Random Forest with the following parameters: 
-* class_weight = 'balanced'
 * criterion = 'entropy'
-* max_depth = 25
-* max_features = 5
-* n_estimators = 250
-
-Overall the project provided insight into some commonly linked risk behaviors, the features important to prediction (listed in the dashboard dropdowns), and the difficulties of predicting individual behaviors from accumulated survey data.  
+* max_depth = 17
+* max_features = 17
+* n_estimators = 300
 
 Figure 7: Cytoscape of Connected Behaviors, taken on a representative subsample of 10,000 survey responses
 ![cytoscape](images/cytoscape.png) 
+
+### Future Work 
+Overall the project provided insight into some commonly linked risk behaviors, the features important to prediction (listed in the dashboard dropdowns), and the difficulties of predicting individual behaviors from accumulated survey data.  
+
+I also discovered that the dashboard would have to be very individualized depending on the audience. If it were strictly for parents, I could increase accuracy, hamming loss, and precision quite a bit by assuming the most frequent answer (which was more often than not the negative answer) for many of the survey questions, and then as you learned more about your child and their habits you could update your previous predictions. For example, if I learned that my child had tried smoking marijuana (question 45, and the most important feature for prediction if all survey responses are left in the model), then my accuracy and precision on the other classifications would increase as well. However, I ended up building this dashboard on the mostly knowable responses that parents should be able to answer about their children without knowing their risk behavior history. For future work it would be interesting to make different versions of the dashboard for different users, depending on their tolerance level for misclassifications. We could also change the threshold of prediction for each classifier depending on the different audiences.  
+
+I'd love to add a geographic feature as well. As it stands, the model predicts on the site with the most survey results over the 10 years which is New York City. I'm sure some of the other districts surveyed would provide enough diversity in response that a user of the dashboard could 'choose a geographic area like mine', either on the basis of political leanings or geographic proximity or simply population size, and that would have an affect on the predictions as well. 
 
 ### Data Sources and Primary Resources for Project
 * Data Resources: 
